@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Котики с рейтингом смешности</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="page">
+    <div class="auth-layout">
+      <div class="auth-card">
+        <h1 class="title">Котики с рейтингом смешности</h1>
+        <p class="subtitle">
+          Войди или зарегистрируйся, чтобы увидеть самых смешных котиков.
+        </p>
+
+        <div class="tabs">
+          <button class="tab-button tab-button--active" data-tab="login">
+            Вход
+          </button>
+          <button class="tab-button" data-tab="register">
+            Регистрация
+          </button>
+        </div>
+
+        <div class="forms">
+          <form id="login-form" class="form form--active">
+            <div class="form-group">
+              <label for="login-username">Логин</label>
+              <input
+                id="login-username"
+                name="username"
+                type="text"
+                autocomplete="username"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="login-password">Пароль</label>
+              <input
+                id="login-password"
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                required
+              />
+            </div>
+            <button type="submit" class="button button--primary">
+              Войти
+            </button>
+          </form>
+
+          <form id="register-form" class="form">
+            <div class="form-group">
+              <label for="register-username">Логин</label>
+              <input
+                id="register-username"
+                name="username"
+                type="text"
+                autocomplete="username"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="register-password">Пароль</label>
+              <input
+                id="register-password"
+                name="password"
+                type="password"
+                minlength="4"
+                autocomplete="new-password"
+                required
+              />
+            </div>
+            <button type="submit" class="button button--primary">
+              Зарегистрироваться
+            </button>
+          </form>
+        </div>
+
+        <div id="auth-message" class="message" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <script src="auth.js"></script>
+  </body>
+</html>
+

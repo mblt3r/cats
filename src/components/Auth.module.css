@@ -1,0 +1,154 @@
+.authLayout {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.authCard {
+  width: 100%;
+  max-width: 420px;
+  padding: 28px 24px 24px;
+  border-radius: 20px;
+  background: radial-gradient(circle at top left, #1f2937 0, #020617 55%);
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  backdrop-filter: blur(20px);
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 4px;
+  color: var(--text-primary);
+}
+
+.subtitle {
+  margin: 0 0 20px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  margin-bottom: 18px;
+}
+
+.tabButton {
+  border-radius: 999px;
+  padding: 8px 0;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.tabButtonActive {
+  background: linear-gradient(135deg, #fb7185, #f97316);
+  color: #0b1220;
+  font-weight: 600;
+  transform: translateY(-1px);
+}
+
+.forms {
+  position: relative;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.formGroup label {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.formGroup input {
+  border-radius: 999px;
+  border: 1px solid var(--border-soft);
+  background: rgba(15, 23, 42, 0.96);
+  padding: 9px 14px;
+  color: var(--text-primary);
+  font-size: 14px;
+  outline: none;
+  transition: border-color var(--transition-fast),
+    box-shadow var(--transition-fast), background var(--transition-fast);
+}
+
+.formGroup input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.5);
+  background: #020617;
+}
+
+.button {
+  border-radius: 999px;
+  border: none;
+  padding: 9px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background var(--transition-fast), transform var(--transition-fast),
+    box-shadow var(--transition-fast), color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.buttonPrimary {
+  width: 100%;
+  background: linear-gradient(135deg, #fb7185, #f97316);
+  color: #020617;
+  box-shadow: 0 12px 28px rgba(127, 29, 29, 0.7);
+}
+
+.buttonPrimary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 32px rgba(8, 47, 73, 0.8);
+}
+
+.button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.message {
+  margin-top: 14px;
+  font-size: 13px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  min-height: 0;
+}
+
+.messageError {
+  border-color: rgba(248, 113, 113, 0.5);
+  background: rgba(127, 29, 29, 0.5);
+  color: #fecaca;
+}
+
+.messageSuccess {
+  border-color: rgba(74, 222, 128, 0.6);
+  background: rgba(22, 101, 52, 0.6);
+  color: #bbf7d0;
+}
