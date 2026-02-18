@@ -50,6 +50,11 @@
   touch-action: pan-y;
 }
 
+.cardInner {
+  position: absolute;
+  inset: 0;
+}
+
 .cardTop {
   cursor: grab;
 }
@@ -161,7 +166,7 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  z-index: 10;
+  z-index: 40;
   opacity: 0;
   transition: opacity 0s;
 }
@@ -248,7 +253,14 @@
 
 .cardLike {
   transform: translateX(240px) translateY(-30px) rotate(14deg) scale(0.98);
-  opacity: 0;
+}
+
+.cardLike .cardInner {
+  animation: shakeFadeOut 720ms ease-out both;
+}
+
+.cardLike .cardImage {
+  opacity: 0.55;
 }
 
 .cardLike .badgeLike {
@@ -256,25 +268,51 @@
   transform: rotate(-12deg) scale(1.05);
 }
 
-.cardLike .likeParticles .heart,
-.cardLike .likeParticles .sparkle {
-  animation: floatUp 1.2s ease-out forwards;
-  opacity: 1;
-}
-
 .cardNope {
   transform: translateX(-240px) translateY(-30px) rotate(-14deg) scale(0.98);
-  opacity: 0;
+}
+
+.cardNope .cardInner {
+  animation: shakeFadeOut 720ms ease-out both;
+}
+
+@keyframes shakeFadeOut {
+  0% {
+    opacity: 1;
+    filter: saturate(1) contrast(1);
+    transform: translateX(0) rotate(0deg);
+  }
+  12% {
+    transform: translateX(-6px) rotate(-1deg);
+  }
+  25% {
+    transform: translateX(7px) rotate(1.2deg);
+  }
+  40% {
+    transform: translateX(-5px) rotate(-1deg);
+  }
+  55% {
+    transform: translateX(4px) rotate(0.8deg);
+  }
+  70% {
+    opacity: 0.75;
+    filter: saturate(0.9) contrast(1.05);
+    transform: translateX(2px) rotate(0.4deg);
+  }
+  100% {
+    opacity: 0.2;
+    filter: saturate(0.7) contrast(1.1) blur(0.2px);
+    transform: translateX(0) rotate(0deg);
+  }
+}
+
+.cardNope .cardImage {
+  opacity: 0.55;
 }
 
 .cardNope .badgeNope {
   opacity: 1;
   transform: rotate(12deg) scale(1.05);
-}
-
-.cardNope .nopeParticles .poop {
-  animation: floatUp 1.2s ease-out forwards;
-  opacity: 1;
 }
 
 .controls {

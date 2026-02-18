@@ -108,7 +108,7 @@ export default function TinderCats() {
       setAction(null);
       setActingId(null);
       setDrag({ x: 0, y: 0, dragging: false });
-    }, 420);
+    }, 900);
   };
 
   const onPointerDown = (e) => {
@@ -219,51 +219,53 @@ export default function TinderCats() {
                 onPointerUp={isTop ? onPointerUp : undefined}
                 onPointerCancel={isTop ? onPointerCancel : undefined}
               >
-                <img
-                  className={styles.cardImage}
-                  src={card.imageUrl}
-                  alt="Котик для тиндера"
-                  draggable={false}
-                />
-                <div className={styles.cardInfo}>
-                  <div className={styles.cardHeader}>
-                    <h3 className={styles.cardName}>
-                      {card.name}, {card.age}
-                    </h3>
-                    <span className={styles.cardDistance}>
-                      {card.distanceKm} км
-                    </span>
+                <div className={styles.cardInner}>
+                  <img
+                    className={styles.cardImage}
+                    src={card.imageUrl}
+                    alt="Котик для тиндера"
+                    draggable={false}
+                  />
+                  <div className={styles.cardInfo}>
+                    <div className={styles.cardHeader}>
+                      <h3 className={styles.cardName}>
+                        {card.name}, {card.age}
+                      </h3>
+                      <span className={styles.cardDistance}>
+                        {card.distanceKm} км
+                      </span>
+                    </div>
+                    <p className={styles.cardBio}>{card.bio}</p>
                   </div>
-                  <p className={styles.cardBio}>{card.bio}</p>
+                  <div className={styles.badges}>
+                    <div
+                      className={styles.badgeNope}
+                      style={{ opacity: Math.max(0, nopeStrength) }}
+                    >
+                      ФУ
+                    </div>
+                    <div
+                      className={styles.badgeLike}
+                      style={{ opacity: Math.max(0, likeStrength) }}
+                    >
+                      ЛАЙК
+                    </div>
+                  </div>
+                  {isActing && action === "like" && (
+                    <div className={styles.likeParticles}>
+                      <span className={styles.heart}>❤️</span>
+                      <span className={styles.sparkle}>✨</span>
+                      <span className={styles.heart}>💖</span>
+                      <span className={styles.sparkle}>✨</span>
+                    </div>
+                  )}
+                  {isActing && action === "nope" && (
+                    <div className={styles.nopeParticles}>
+                      <span className={styles.poop}>💩</span>
+                      <span className={styles.poop}>💩</span>
+                    </div>
+                  )}
                 </div>
-                <div className={styles.badges}>
-                  <div
-                    className={styles.badgeNope}
-                    style={{ opacity: Math.max(0, nopeStrength) }}
-                  >
-                    ФУ
-                  </div>
-                  <div
-                    className={styles.badgeLike}
-                    style={{ opacity: Math.max(0, likeStrength) }}
-                  >
-                    ЛАЙК
-                  </div>
-                </div>
-                {isActing && action === "like" && (
-                  <div className={styles.likeParticles}>
-                    <span className={styles.heart}>❤️</span>
-                    <span className={styles.sparkle}>✨</span>
-                    <span className={styles.heart}>💖</span>
-                    <span className={styles.sparkle}>✨</span>
-                  </div>
-                )}
-                {isActing && action === "nope" && (
-                  <div className={styles.nopeParticles}>
-                    <span className={styles.poop}>💩</span>
-                    <span className={styles.poop}>💩</span>
-                  </div>
-                )}
               </div>
             );
           })}
