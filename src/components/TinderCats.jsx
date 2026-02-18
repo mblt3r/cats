@@ -97,6 +97,10 @@ export default function TinderCats() {
   const act = (type) => {
     if (!topCard || actingId) return;
 
+    // Play sound effect
+    const audio = new Audio(`/sounds/${type}.mp3`);
+    audio.play().catch((error) => console.log("Audio play failed:", error));
+
     setAction(type);
     setActingId(topCard.id);
 
