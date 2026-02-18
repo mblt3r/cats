@@ -26,6 +26,7 @@ export default function Feed({ onTopCatsUpdate, onCatRemovedFromTop }) {
 
   const loadMoreFeed = useCallback(
     (count = 6) => {
+      const startedAt = Date.now();
       setLoading(true);
       const newItems = [];
       for (let i = 0; i < count; i++) {
@@ -34,7 +35,10 @@ export default function Feed({ onTopCatsUpdate, onCatRemovedFromTop }) {
 
       setTimeout(() => {
         setFeedItems((prev) => [...prev, ...newItems]);
-        setLoading(false);
+        const elapsed = Date.now() - startedAt;
+        const minVisibleMs = 1100;
+        const remaining = Math.max(0, minVisibleMs - elapsed);
+        setTimeout(() => setLoading(false), remaining);
       }, 250);
     },
     [createFeedItem],
@@ -154,7 +158,21 @@ export default function Feed({ onTopCatsUpdate, onCatRemovedFromTop }) {
         ))}
       </div>
 
-      <div ref={loader} className={styles.loaderTrigger} />
+      <div className={styles.feedFooter}>
+        <div ref={loader} className={styles.loaderTrigger} />
+      </div>
+
+      {loading && (
+        <div className={styles.bigBottomLoader}>
+          <div className={styles.bigBottomLoaderInner}>
+            <div className={styles.bigSpinner}></div>
+            <div className={styles.bigTextBlock}>
+              <div className={styles.bigTitle}>Загружаем котиков…</div>
+              <div className={styles.bigSubtitle}>Ещё чуточку, мяу.</div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
