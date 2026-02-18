@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import RandomCat from "./RandomCat";
 import TinderCats from "./TinderCats";
 import CatChat from "./CatChat";
+import FlappyCats from "./FlappyCats";
 import TopCats from "./TopCats";
 import Feed from "./Feed";
 import { logout, getTopCats } from "../services/api";
@@ -87,6 +88,7 @@ export default function Cats() {
           <RandomCat />
           <TinderCats />
         </div>
+        <FlappyCats />
         <CatChat />
         <TopCats
           currentSort={currentSort}
