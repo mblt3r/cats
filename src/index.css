@@ -29,6 +29,8 @@ body {
 
 body {
   font-family:
+    "Comic Sans MS",
+    "Segoe Print",
     system-ui,
     -apple-system,
     BlinkMacSystemFont,
@@ -88,6 +90,103 @@ body {
     64px 64px;
   color: var(--text-primary);
   min-height: 100vh;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at 10% 18%,
+      rgba(255, 95, 162, 0.18) 0 6px,
+      transparent 7px
+    ),
+    radial-gradient(
+      circle at 14% 22%,
+      rgba(42, 27, 45, 0.07) 0 2px,
+      transparent 3px
+    ),
+    radial-gradient(
+      circle at 70% 12%,
+      rgba(255, 184, 107, 0.22) 0 7px,
+      transparent 8px
+    ),
+    radial-gradient(
+      circle at 74% 16%,
+      rgba(42, 27, 45, 0.07) 0 2px,
+      transparent 3px
+    ),
+    radial-gradient(
+      circle at 26% 78%,
+      rgba(255, 95, 162, 0.16) 0 7px,
+      transparent 8px
+    ),
+    radial-gradient(
+      circle at 30% 82%,
+      rgba(42, 27, 45, 0.07) 0 2px,
+      transparent 3px
+    ),
+    radial-gradient(
+      circle at 86% 74%,
+      rgba(255, 184, 107, 0.18) 0 8px,
+      transparent 9px
+    ),
+    radial-gradient(
+      circle at 90% 78%,
+      rgba(42, 27, 45, 0.07) 0 2px,
+      transparent 3px
+    );
+  mix-blend-mode: multiply;
+  opacity: 0.35;
+  filter: blur(0.2px);
+  animation: floatPaws 8s ease-in-out infinite;
+}
+
+::selection {
+  background: rgba(255, 95, 162, 0.26);
+  color: #2a1b2d;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:hover {
+  animation: meowWiggle 0.35s ease-in-out;
+}
+
+*:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(255, 95, 162, 0.22);
+}
+
+@keyframes meowWiggle {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-1.4deg) scale(1.01);
+  }
+  50% {
+    transform: rotate(1.4deg) scale(1.01);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes floatPaws {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 #root {

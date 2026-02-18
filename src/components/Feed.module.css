@@ -32,7 +32,7 @@
   width: 16px;
   height: 16px;
   border-radius: 999px;
-  border: 2px solid rgba(148, 163, 184, 0.4);
+  border: 2px solid rgba(42, 27, 45, 0.18);
   border-top-color: var(--accent);
   animation: spin 0.7s linear infinite;
 }
@@ -51,8 +51,17 @@
 .feedItem {
   border-radius: var(--radius-md);
   overflow: hidden;
-  border: 1px solid rgba(148, 163, 184, 0.35);
-  background: #020617;
+  border: 1px solid rgba(42, 27, 45, 0.16);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 16px 34px rgba(42, 27, 45, 0.12);
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.feedItem:hover {
+  transform: translateY(-2px) rotate(0.2deg);
+  box-shadow: 0 24px 52px rgba(255, 95, 162, 0.16);
 }
 
 .feedItemImage {
@@ -66,7 +75,13 @@
   padding: 10px 10px 11px;
   display: flex;
   justify-content: center;
-  background: radial-gradient(circle at top, rgba(251, 113, 133, 0.1), #020617);
+  background:
+    radial-gradient(circle at top, rgba(255, 95, 162, 0.12), transparent 60%),
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.86),
+      rgba(255, 241, 248, 0.92)
+    );
 }
 
 .button {
@@ -80,20 +95,23 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  transition: background var(--transition-fast), transform var(--transition-fast),
-    box-shadow var(--transition-fast), color var(--transition-fast),
+  transition:
+    background var(--transition-fast),
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    color var(--transition-fast),
     border-color var(--transition-fast);
 }
 
 .buttonPrimary {
-  background: linear-gradient(135deg, #fb7185, #f97316);
-  color: #020617;
-  box-shadow: 0 12px 28px rgba(127, 29, 29, 0.7);
+  background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+  color: #2a1b2d;
+  box-shadow: 0 14px 34px rgba(255, 95, 162, 0.24);
 }
 
 .buttonPrimary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 18px 32px rgba(8, 47, 73, 0.8);
+  box-shadow: 0 20px 44px rgba(255, 95, 162, 0.28);
 }
 
 .feedItemButton {

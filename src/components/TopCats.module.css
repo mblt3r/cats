@@ -2,8 +2,41 @@
   margin-top: 28px;
   padding: 18px 16px 16px;
   border-radius: var(--radius-lg);
-  border: 1px solid rgba(148, 163, 184, 0.45);
-  background: radial-gradient(circle at top left, #020617 0, #020617 60%);
+  border: 1px solid rgba(42, 27, 45, 0.16);
+  background:
+    radial-gradient(
+      circle at 12% 18%,
+      rgba(255, 95, 162, 0.16) 0,
+      transparent 44%
+    ),
+    radial-gradient(
+      circle at 86% 16%,
+      rgba(255, 184, 107, 0.18) 0,
+      transparent 48%
+    ),
+    radial-gradient(
+      circle at 22px 22px,
+      rgba(42, 27, 45, 0.05) 0 6px,
+      transparent 7px
+    ),
+    radial-gradient(
+      circle at 40px 38px,
+      rgba(42, 27, 45, 0.04) 0 4px,
+      transparent 5px
+    ),
+    radial-gradient(
+      circle at 30px 40px,
+      rgba(42, 27, 45, 0.035) 0 10px,
+      transparent 11px
+    ),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 241, 248, 0.92));
+  background-size:
+    auto,
+    auto,
+    64px 64px,
+    64px 64px,
+    64px 64px,
+    auto;
 }
 
 .title {
@@ -34,10 +67,20 @@
 .topCard {
   border-radius: var(--radius-md);
   overflow: hidden;
-  border: 1px solid rgba(148, 163, 184, 0.45);
-  background: #020617;
+  border: 1px solid rgba(42, 27, 45, 0.16);
+  background: rgba(255, 255, 255, 0.9);
   display: flex;
   flex-direction: column;
+  box-shadow: 0 16px 34px rgba(42, 27, 45, 0.12);
+  transform: translateZ(0);
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.topCard:hover {
+  transform: translateY(-2px) rotate(-0.2deg);
+  box-shadow: 0 22px 48px rgba(255, 95, 162, 0.18);
 }
 
 .topCardImage {
@@ -53,11 +96,9 @@
   justify-content: space-between;
   gap: 6px;
   padding: 8px 10px;
-  background: radial-gradient(
-    circle at top,
-    rgba(251, 113, 133, 0.2),
-    #020617 60%
-  );
+  background:
+    radial-gradient(circle at top, rgba(255, 95, 162, 0.14), transparent 60%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.86), rgba(255, 241, 248, 0.9));
 }
 
 .leftSection {
@@ -76,8 +117,8 @@
   font-weight: 600;
   padding: 2px 8px;
   border-radius: 999px;
-  background: var(--accent-soft);
-  color: var(--accent);
+  background: rgba(255, 95, 162, 0.14);
+  color: #a01052;
 }
 
 .voteControls {
@@ -90,24 +131,25 @@
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  border: 1px solid var(--border-soft);
-  background: rgba(15, 23, 42, 0.8);
-  color: var(--text-primary);
+  border: 1px solid rgba(42, 27, 45, 0.2);
+  background: rgba(255, 255, 255, 0.86);
+  color: #2a1b2d;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background var(--transition-fast), 
-              border-color var(--transition-fast), 
-              transform var(--transition-fast);
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast),
+    transform var(--transition-fast);
 }
 
 .voteBtn:hover {
-  background: var(--accent);
-  border-color: var(--accent);
-  transform: scale(1.1);
+  background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+  border-color: rgba(255, 95, 162, 0.45);
+  transform: scale(1.12) rotate(-2deg);
 }
 
 .voteBtn:active {
