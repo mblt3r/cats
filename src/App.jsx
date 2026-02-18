@@ -1,64 +1,80 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
-import Auth from './components/Auth'
-import Cats from './components/Cats'
-import { checkAuth } from './services/api'
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import Auth from "./components/Auth";
+import Cats from "./components/Cats";
+import { checkAuth } from "./services/api";
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [loading, setLoading] = useState(true)
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const verifyAuth = async () => {
       try {
-        const authenticated = await checkAuth()
-        setIsAuthenticated(authenticated)
+        const authenticated = await checkAuth();
+        setIsAuthenticated(authenticated);
       } catch (error) {
-        setIsAuthenticated(false)
+        setIsAuthenticated(false);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
-    verifyAuth()
-  }, [])
+    verifyAuth();
+  }, []);
 
   if (loading) {
     return (
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        height: '100vh',
-        color: 'var(--text-primary)'
-      }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          color: "var(--text-primary)",
+        }}
+      >
         Загрузка...
       </div>
-    )
+    );
   }
 
   return (
     <Routes>
-      <Route 
-        path="/auth" 
-        element={
-          isAuthenticated ? <Navigate to="/cats" replace /> : <Auth />
-        } 
+      <Route
+        path="/auth"
+        element={isAuthenticated ? <Navigate to="/cats" replace /> : <Auth />}
       />
-      <Route 
-        path="/cats" 
+      <Route
+        path="/login"
         element={
-          isAuthenticated ? <Cats /> : <Navigate to="/auth" replace />
-        } 
+          isAuthenticated ? (
+            <Navigate to="/cats" replace />
+          ) : (
+            <Auth initialTab="login" />
+          )
+        }
       />
-      <Route 
-        path="/" 
+      <Route
+        path="/register"
         element={
-          <Navigate to={isAuthenticated ? "/cats" : "/auth"} replace />
-        } 
+          isAuthenticated ? (
+            <Navigate to="/cats" replace />
+          ) : (
+            <Auth initialTab="register" />
+          )
+        }
+      />
+      <Route
+        path="/cats"
+        element={isAuthenticated ? <Cats /> : <Navigate to="/auth" replace />}
+      />
+      <Route
+        path="/"
+        element={<Navigate to={isAuthenticated ? "/cats" : "/auth"} replace />}
       />
     </Routes>
-  )
+  );
 }
 
-export default App
+export default App;

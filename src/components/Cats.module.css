@@ -10,8 +10,23 @@
   align-items: center;
   justify-content: space-between;
   padding: 12px 18px;
-  background: radial-gradient(circle at top left, #111827 0, #020617 55%);
-  border-bottom: 1px solid rgba(148, 163, 184, 0.45);
+  background:
+    radial-gradient(
+      circle at 16% 20%,
+      rgba(255, 95, 162, 0.22) 0,
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 86% 18%,
+      rgba(255, 184, 107, 0.22) 0,
+      transparent 44%
+    ),
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.92),
+      rgba(255, 241, 248, 0.92)
+    );
+  border-bottom: 1px solid rgba(42, 27, 45, 0.16);
   backdrop-filter: blur(16px);
 }
 
@@ -42,8 +57,11 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  transition: background var(--transition-fast), transform var(--transition-fast),
-    box-shadow var(--transition-fast), color var(--transition-fast),
+  transition:
+    background var(--transition-fast),
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    color var(--transition-fast),
     border-color var(--transition-fast);
 }
 
@@ -55,24 +73,25 @@
 }
 
 .buttonGhost:hover {
-  background: rgba(30, 64, 175, 0.7);
+  background: rgba(255, 95, 162, 0.12);
+  border-color: rgba(255, 95, 162, 0.22);
   color: var(--text-primary);
 }
 
 .buttonActive {
-  background: var(--accent);
-  color: #020617;
+  background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+  color: #2a1b2d;
 }
 
 .buttonSecondary {
-  background: rgba(15, 23, 42, 0.95);
+  background: rgba(255, 255, 255, 0.86);
   color: var(--text-primary);
-  border: 1px solid var(--border-soft);
+  border: 1px solid rgba(42, 27, 45, 0.18);
 }
 
 .buttonSecondary:hover {
-  background: rgba(30, 64, 175, 0.9);
-  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.96);
+  border-color: rgba(255, 95, 162, 0.34);
 }
 
 @media (max-width: 640px) {

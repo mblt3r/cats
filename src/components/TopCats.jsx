@@ -1,47 +1,58 @@
-import { useState, useEffect } from 'react'
-import { getTopCats, incrementVote, decrementVote } from '../services/api'
-import styles from './TopCats.module.css'
+import { useState, useEffect } from "react";
+import { getTopCats, incrementVote, decrementVote } from "../services/api";
+import styles from "./TopCats.module.css";
 
-export default function TopCats({ currentSort }) {
-  const [topCats, setTopCats] = useState([])
-  const [loading, setLoading] = useState(true)
+export default function TopCats({
+  currentSort,
+  topCats,
+  onVoteUpdate,
+  onCatRemoved,
+}) {
+  const [previousCats, setPreviousCats] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const fetchTopCats = async () => {
-    try {
-      const cats = await getTopCats()
-      setTopCats(cats)
-    } catch (error) {
-      console.error('Ошибка загрузки топа:', error)
-    } finally {
-      setLoading(false)
+  useEffect(() => {
+    // Находим удаленных котиков при изменении топа
+    const removed = previousCats.filter(
+      (prevCat) =>
+        !topCats.find((newCat) => newCat.imagePath === prevCat.imagePath),
+    );
+
+    if (removed.length > 0 && onCatRemoved) {
+      onCatRemoved(removed);
     }
-  }
+
+    setPreviousCats(topCats);
+  }, [topCats, onCatRemoved]);
+
+  useEffect(() => {
+    setLoading(false);
+  }, [topCats]);
 
   const handleVote = async (imagePath, action) => {
     try {
-      let updatedCats
-      if (action === 'increment') {
-        updatedCats = await incrementVote(imagePath)
+      let updatedCats;
+      if (action === "increment") {
+        updatedCats = await incrementVote(imagePath);
       } else {
-        updatedCats = await decrementVote(imagePath)
+        updatedCats = await decrementVote(imagePath);
       }
-      setTopCats(updatedCats)
+      // Вызываем callback для обновления состояния в родительском компоненте
+      if (onVoteUpdate) {
+        onVoteUpdate();
+      }
     } catch (error) {
-      console.error('Ошибка обновления рейтинга:', error)
+      console.error("Ошибка обновления рейтинга:", error);
     }
-  }
-
-  useEffect(() => {
-    fetchTopCats()
-  }, [])
+  };
 
   const sortedCats = [...topCats].sort((a, b) => {
-    if (currentSort === 'funny') {
-      return b.votes - a.votes
+    if (currentSort === "funny") {
+      return b.votes - a.votes;
     } else {
-      return a.votes - b.votes
+      return a.votes - b.votes;
     }
-  })
+  });
 
   if (loading) {
     return (
@@ -49,16 +60,17 @@ export default function TopCats({ currentSort }) {
         <h2 className={styles.title}>Топ самых смешных котиков</h2>
         <p className={styles.subtitle}>Загрузка...</p>
       </section>
-    )
+    );
   }
 
   return (
     <section className={styles.topFunny}>
       <h2 className={styles.title}>Топ самых смешных котиков</h2>
       <p className={styles.subtitle}>
-        Здесь появляются только котики, которых ты отметил как смешных в бесконечной ленте.
+        Здесь появляются только котики, которых ты отметил как смешных в
+        бесконечной ленте.
       </p>
-      
+
       {sortedCats.length === 0 ? (
         <p className={styles.empty}>
           Пока никто не попал в топ. Отметь смешного котика в ленте!
@@ -81,14 +93,14 @@ export default function TopCats({ currentSort }) {
                 <div className={styles.voteControls}>
                   <button
                     className={styles.voteBtn}
-                    onClick={() => handleVote(cat.imagePath, 'decrement')}
+                    onClick={() => handleVote(cat.imagePath, "decrement")}
                     title="Уменьшить рейтинг"
                   >
                     −
                   </button>
                   <button
                     className={styles.voteBtn}
-                    onClick={() => handleVote(cat.imagePath, 'increment')}
+                    onClick={() => handleVote(cat.imagePath, "increment")}
                     title="Увеличить рейтинг"
                   >
                     +
@@ -100,5 +112,5 @@ export default function TopCats({ currentSort }) {
         </div>
       )}
     </section>
-  )
+  );
 }

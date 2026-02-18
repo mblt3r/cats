@@ -1,43 +1,58 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { login, register } from '../services/api'
-import styles from './Auth.module.css'
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { login, register } from "../services/api";
+import styles from "./Auth.module.css";
 
-export default function Auth() {
-  const [activeTab, setActiveTab] = useState('login')
+export default function Auth({ initialTab }) {
+  const [activeTab, setActiveTab] = useState("login");
   const [formData, setFormData] = useState({
-    username: '',
-    password: ''
-  })
-  const [message, setMessage] = useState({ text: '', isError: false })
-  const [loading, setLoading] = useState(false)
-  const navigate = useNavigate()
+    username: "",
+    password: "",
+  });
+  const [message, setMessage] = useState({ text: "", isError: false });
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (initialTab === "login" || initialTab === "register") {
+      setActiveTab(initialTab);
+    }
+  }, [initialTab]);
 
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleSubmit = async (e, action) => {
-    e.preventDefault()
-    setLoading(true)
-    setMessage({ text: '', isError: false })
+    e.preventDefault();
+    setLoading(true);
+    setMessage({ text: "", isError: false });
 
     try {
-      if (action === 'login') {
-        await login(formData.username, formData.password)
+      console.log(`Отправка запроса на ${action}:`, {
+        username: formData.username,
+        password: formData.password,
+      });
+
+      if (action === "login") {
+        await login(formData.username, formData.password);
       } else {
-        await register(formData.username, formData.password)
+        await register(formData.username, formData.password);
       }
-      navigate('/cats')
+
+      console.log("Успешный ответ, перенаправление...");
+      // Обновляем страницу для перезагрузки состояния авторизации
+      window.location.href = "/cats";
     } catch (error) {
-      setMessage({ text: error.message, isError: true })
+      console.error("Ошибка:", error);
+      setMessage({ text: error.message, isError: true });
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className={styles.authLayout}>
@@ -49,24 +64,24 @@ export default function Auth() {
 
         <div className={styles.tabs}>
           <button
-            className={`${styles.tabButton} ${activeTab === 'login' ? styles.tabButtonActive : ''}`}
-            onClick={() => setActiveTab('login')}
+            className={`${styles.tabButton} ${activeTab === "login" ? styles.tabButtonActive : ""}`}
+            onClick={() => setActiveTab("login")}
           >
             Вход
           </button>
           <button
-            className={`${styles.tabButton} ${activeTab === 'register' ? styles.tabButtonActive : ''}`}
-            onClick={() => setActiveTab('register')}
+            className={`${styles.tabButton} ${activeTab === "register" ? styles.tabButtonActive : ""}`}
+            onClick={() => setActiveTab("register")}
           >
             Регистрация
           </button>
         </div>
 
         <div className={styles.forms}>
-          {activeTab === 'login' ? (
+          {activeTab === "login" ? (
             <form
               className={styles.form}
-              onSubmit={(e) => handleSubmit(e, 'login')}
+              onSubmit={(e) => handleSubmit(e, "login")}
             >
               <div className={styles.formGroup}>
                 <label htmlFor="login-username">Логин</label>
@@ -97,13 +112,13 @@ export default function Auth() {
                 className={`${styles.button} ${styles.buttonPrimary}`}
                 disabled={loading}
               >
-                {loading ? 'Входим...' : 'Войти'}
+                {loading ? "Входим..." : "Войти"}
               </button>
             </form>
           ) : (
             <form
               className={styles.form}
-              onSubmit={(e) => handleSubmit(e, 'register')}
+              onSubmit={(e) => handleSubmit(e, "register")}
             >
               <div className={styles.formGroup}>
                 <label htmlFor="register-username">Логин</label>
@@ -135,18 +150,20 @@ export default function Auth() {
                 className={`${styles.button} ${styles.buttonPrimary}`}
                 disabled={loading}
               >
-                {loading ? 'Регистрируем...' : 'Зарегистрироваться'}
+                {loading ? "Регистрируем..." : "Зарегистрироваться"}
               </button>
             </form>
           )}
         </div>
 
         {message.text && (
-          <div className={`${styles.message} ${message.isError ? styles.messageError : styles.messageSuccess}`}>
+          <div
+            className={`${styles.message} ${message.isError ? styles.messageError : styles.messageSuccess}`}
+          >
             {message.text}
           </div>
         )}
       </div>
     </div>
-  )
+  );
 }

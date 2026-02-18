@@ -4,6 +4,7 @@ const { createUser, verifyUser } = require("./data/usersStore");
 const router = express.Router();
 
 router.post("/register", async (req, res) => {
+  console.log("Register request:", req);
   const { username, password } = req.body || {};
 
   if (!username || !password || password.length < 4) {
@@ -53,4 +54,3 @@ router.post("/logout", (req, res) => {
 });
 
 module.exports = router;
-

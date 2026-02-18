@@ -56,7 +56,21 @@ function decrementVote(imagePath) {
   }
 
   item.votes = Math.max(0, item.votes - 1);
+
+  // Если голосов стало 0, удаляем котика из топа
+  if (item.votes === 0) {
+    const index = topCats.findIndex((c) => c.imagePath === imagePath);
+    if (index > -1) {
+      topCats.splice(index, 1);
+    }
+  }
+
   return getTopCats();
+}
+
+function getRemovedCats() {
+  // Возвращаем котиков, которые были удалены из топа (можно использовать для логики)
+  return [];
 }
 
 module.exports = {
