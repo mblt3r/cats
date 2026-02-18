@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import RandomCat from "./RandomCat";
+import TinderCats from "./TinderCats";
 import TopCats from "./TopCats";
 import Feed from "./Feed";
 import { logout, getTopCats } from "../services/api";
@@ -81,7 +82,10 @@ export default function Cats() {
       </header>
 
       <main className={styles.content}>
-        <RandomCat />
+        <div className={styles.topRow}>
+          <RandomCat />
+          <TinderCats />
+        </div>
         <TopCats
           currentSort={currentSort}
           topCats={topCats}

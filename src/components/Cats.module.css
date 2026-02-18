@@ -63,6 +63,24 @@
   padding: 18px;
 }
 
+.topRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: start;
+  margin-top: 28px;
+}
+
+.topRow > * {
+  margin-top: 0;
+}
+
+@media (max-width: 960px) {
+  .topRow {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 .button {
   border-radius: 999px;
   border: none;
