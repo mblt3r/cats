@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Routes, Route, NavLink } from "react-router-dom";
 import RandomCat from "./components/RandomCat";
 import TinderCats from "./components/TinderCats";
 import CatChat from "./components/CatChat";
@@ -6,66 +6,62 @@ import FlappyCats from "./components/FlappyCats";
 import FeedAndTop from "./components/FeedAndTop";
 import ThemeToggle from "./components/ThemeToggle";
 import styles from "./App.module.css";
-
+// дьявол носит прада, а котики — смешные рейтинги！
 function App() {
-  const [currentView, setCurrentView] = useState("random");
-
-  const renderView = () => {
-    switch (currentView) {
-      case "random":
-        return <RandomCat />;
-      case "tinder":
-        return <TinderCats />;
-      case "chat":
-        return <CatChat />;
-      case "flappy":
-        return <FlappyCats />;
-      case "feedAndTop":
-        return <FeedAndTop />;
-      default:
-        return <RandomCat />;
-    }
-  };
-
   return (
     <div className={styles.container}>
       <ThemeToggle />
+
       <div className={styles.navigation}>
         <h1>🐱 Котики с рейтингом смешности</h1>
+
         <div className={styles.navButtons}>
-          <button
-            className={currentView === "random" ? styles.active : ""}
-            onClick={() => setCurrentView("random")}
+          <NavLink
+            to="/random"
+            className={({ isActive }) => (isActive ? styles.active : "")}
           >
             Случайный котик
-          </button>
-          <button
-            className={currentView === "tinder" ? styles.active : ""}
-            onClick={() => setCurrentView("tinder")}
+          </NavLink>
+
+          <NavLink
+            to="/tinder"
+            className={({ isActive }) => (isActive ? styles.active : "")}
           >
             Tinder котики
-          </button>
-          <button
-            className={currentView === "feedAndTop" ? styles.active : ""}
-            onClick={() => setCurrentView("feedAndTop")}
+          </NavLink>
+
+          <NavLink
+            to="/feed"
+            className={({ isActive }) => (isActive ? styles.active : "")}
           >
             Лента и Топ
-          </button>
-          <button
-            className={currentView === "chat" ? styles.active : ""}
-            onClick={() => setCurrentView("chat")}
+          </NavLink>
+
+          <NavLink
+            to="/chat"
+            className={({ isActive }) => (isActive ? styles.active : "")}
           >
             Chat с котиком
-          </button>
-          <button
-            className={currentView === "flappy" ? styles.active : ""}
-            onClick={() => setCurrentView("flappy")}
+          </NavLink>
+
+          <NavLink
+            to="/flappy"
+            className={({ isActive }) => (isActive ? styles.active : "")}
           >
             Flappy Cats
-          </button>
+          </NavLink>
         </div>
       </div>
-      <div className={styles.content}>{renderView()}</div>
+
+      <div className={styles.content}>
+        <Routes>
+          <Route path="/random" element={<RandomCat />} />
+          <Route path="/tinder" element={<TinderCats />} />
+          <Route path="/feed" element={<FeedAndTop />} />
+          <Route path="/chat" element={<CatChat />} />
+          <Route path="/flappy" element={<FlappyCats />} />
+        </Routes>
+      </div>
     </div>
   );
 }
