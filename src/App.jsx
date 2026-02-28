@@ -17,7 +17,7 @@ function App() {
 
         <div className={styles.navButtons}>
           <NavLink
-            to="/random"
+            to="/"
             className={({ isActive }) => (isActive ? styles.active : "")}
           >
             Случайный котик
@@ -55,7 +55,8 @@ function App() {
 
       <div className={styles.content}>
         <Routes>
-          <Route path="/random" element={<RandomCat />} />
+          <Route path="/" element={<RandomCat />} />
+          {/* <Route path="/" element={<RandomCat />} /> */}
           <Route path="/tinder" element={<TinderCats />} />
           <Route path="/feed" element={<FeedAndTop />} />
           <Route path="/chat" element={<CatChat />} />
