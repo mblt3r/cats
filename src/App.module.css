@@ -1,0 +1,72 @@
+.container {
+  min-height: 100vh;
+  padding: 20px;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+}
+
+.navigation {
+  max-width: 1200px;
+  margin: 0 auto 30px;
+  text-align: center;
+}
+
+.navigation h1 {
+  margin: 0 0 20px 0;
+  font-size: 2.5em;
+  color: var(--text-primary);
+}
+
+.navButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.navButtons button {
+  padding: 10px 20px;
+  font-size: 1em;
+  border: 2px solid var(--text-primary);
+  background-color: transparent;
+  color: var(--text-primary);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.navButtons button:hover {
+  background-color: var(--text-primary);
+  color: var(--bg-primary);
+  transform: translateY(-2px);
+}
+
+.navButtons button.active {
+  background-color: var(--text-primary);
+  color: var(--bg-primary);
+  font-weight: bold;
+}
+
+.content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .navigation h1 {
+    font-size: 1.8em;
+  }
+
+  .navButtons {
+    gap: 8px;
+  }
+
+  .navButtons button {
+    padding: 8px 15px;
+    font-size: 0.9em;
+  }
+}

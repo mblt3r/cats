@@ -1,85 +1,74 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import Auth from "./components/Auth";
-import Cats from "./components/Cats";
+import { useState } from "react";
+import RandomCat from "./components/RandomCat";
+import TinderCats from "./components/TinderCats";
+import CatChat from "./components/CatChat";
+import FlappyCats from "./components/FlappyCats";
+import Feed from "./components/Feed";
 import ThemeToggle from "./components/ThemeToggle";
-import { checkAuth } from "./services/api";
+import styles from "./App.module.css";
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [currentView, setCurrentView] = useState("random");
 
-  useEffect(() => {
-    const verifyAuth = async () => {
-      try {
-        const authenticated = await checkAuth();
-        setIsAuthenticated(authenticated);
-      } catch (error) {
-        setIsAuthenticated(false);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    verifyAuth();
-  }, []);
-
-  if (loading) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-          color: "var(--text-primary)",
-        }}
-      >
-        Загрузка...
-      </div>
-    );
-  }
+  const renderView = () => {
+    switch (currentView) {
+      case "random":
+        return <RandomCat />;
+      case "tinder":
+        return <TinderCats />;
+      case "chat":
+        return <CatChat />;
+      case "flappy":
+        return <FlappyCats />;
+      case "feed":
+        return <Feed />;
+      default:
+        return <RandomCat />;
+    }
+  };
 
   return (
-    <>
+    <div className={styles.container}>
       <ThemeToggle />
-      <Routes>
-        <Route
-          path="/auth"
-          element={isAuthenticated ? <Navigate to="/cats" replace /> : <Auth />}
-        />
-        <Route
-          path="/login"
-          element={
-            isAuthenticated ? (
-              <Navigate to="/cats" replace />
-            ) : (
-              <Auth initialTab="login" />
-            )
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            isAuthenticated ? (
-              <Navigate to="/cats" replace />
-            ) : (
-              <Auth initialTab="register" />
-            )
-          }
-        />
-        <Route
-          path="/cats"
-          element={isAuthenticated ? <Cats /> : <Navigate to="/auth" replace />}
-        />
-        <Route
-          path="/"
-          element={
-            <Navigate to={isAuthenticated ? "/cats" : "/auth"} replace />
-          }
-        />
-      </Routes>
-    </>
+      <div className={styles.navigation}>
+        <h1>🐱 Котики с рейтингом смешности</h1>
+        <div className={styles.navButtons}>
+          <button
+            className={currentView === "random" ? styles.active : ""}
+            onClick={() => setCurrentView("random")}
+          >
+            Случайный котик
+          </button>
+          <button
+            className={currentView === "tinder" ? styles.active : ""}
+            onClick={() => setCurrentView("tinder")}
+          >
+            Tinder котики
+          </button>
+          <button
+            className={currentView === "feed" ? styles.active : ""}
+            onClick={() => setCurrentView("feed")}
+          >
+            Лента
+          </button>
+          <button
+            className={currentView === "chat" ? styles.active : ""}
+            onClick={() => setCurrentView("chat")}
+          >
+            Chat с котиком
+          </button>
+          <button
+            className={currentView === "flappy" ? styles.active : ""}
+            onClick={() => setCurrentView("flappy")}
+          >
+            Flappy Cats
+          </button>
+        </div>
+      </div>
+      <div className={styles.content}>
+        {renderView()}
+      </div>
+    </div>
   );
 }
 

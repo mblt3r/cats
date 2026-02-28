@@ -8,24 +8,21 @@ export default function RandomCat() {
   const loadRandomCat = async () => {
     setLoading(true)
     try {
-      const url = `/api/cat-image?width=300&height=300&gif=1&says=LOL&fontSize=32&fontColor=white&filter=mono&type=square&timestamp=${Date.now()}`
+      // Используем публичный API CATAAS
+      const randomId = Math.floor(Math.random() * 1000000)
+      const url = `https://cataas.com/cat?width=400&height=320&type=square&timestamp=${randomId}`
       
       await new Promise((resolve, reject) => {
         const img = new Image()
         img.onload = resolve
-        img.onerror = () => {
-          const fallbackUrl = `/api/cat-image?width=300&height=300&gif=1&timestamp=${Date.now()}`
-          const fallbackImg = new Image()
-          fallbackImg.onload = resolve
-          fallbackImg.onerror = reject
-          fallbackImg.src = fallbackUrl
-          setCatUrl(fallbackUrl)
-        }
+        img.onerror = reject
         img.src = url
         setCatUrl(url)
       })
     } catch (error) {
       console.error('Ошибка загрузки котика:', error)
+      // Fallback URL
+      setCatUrl('https://cataas.com/cat')
     } finally {
       setLoading(false)
     }

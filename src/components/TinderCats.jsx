@@ -2,12 +2,9 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import styles from "./TinderCats.module.css";
 
 function createTinderCard() {
-  const uniqueId =
-    Date.now().toString() +
-    "-" +
-    Math.floor(Math.random() * 1_000_000).toString();
+  const uniqueId = Math.floor(Math.random() * 1000000);
 
-  const imageUrl = `/api/cat-image?width=420&height=520&catId=${uniqueId}&timestamp=${uniqueId}&type=square`;
+  const imageUrl = `https://cataas.com/cat?width=420&height=520&timestamp=${uniqueId}`;
 
   const firstNames = [
     "Мурзик",

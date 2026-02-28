@@ -1,21 +1,14 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { getTopCats, addFunnyVote } from "../services/api";
 import styles from "./Feed.module.css";
 
 export default function Feed({ onTopCatsUpdate, onCatRemovedFromTop }) {
   const [feedItems, setFeedItems] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [topCats, setTopCats] = useState([]);
-  const [addedToTop, setAddedToTop] = useState(new Set());
   const loader = useRef(null);
-  const pageRef = useRef(0);
 
   const createFeedItem = useCallback(() => {
-    const uniqueId =
-      Date.now().toString() +
-      "-" +
-      Math.floor(Math.random() * 1_000_000).toString();
-    const fullImageUrl = `/api/cat-image?width=400&height=320&catId=${uniqueId}&timestamp=${uniqueId}`;
+    const uniqueId = Math.floor(Math.random() * 1000000);
+    const fullImageUrl = `https://cataas.com/cat?width=400&height=320&timestamp=${uniqueId}`;
 
     return {
       id: uniqueId,
@@ -44,54 +37,14 @@ export default function Feed({ onTopCatsUpdate, onCatRemovedFromTop }) {
     [createFeedItem],
   );
 
-  const handleAddToTop = async (imagePath) => {
-    try {
-      const updatedTop = await addFunnyVote(imagePath);
-      setTopCats(updatedTop);
-      setAddedToTop((prev) => new Set([...prev, imagePath]));
-      setFeedItems((prev) =>
-        prev.filter((item) => item.imagePath !== imagePath),
-      );
-      if (onTopCatsUpdate) {
-        onTopCatsUpdate(updatedTop);
-      }
-    } catch (error) {
-      console.error("Ошибка добавления в топ:", error);
-    }
-  };
-
-  const fetchTopCats = async () => {
-    try {
-      const cats = await getTopCats();
-      const previousCats = topCats;
-      setTopCats(cats);
-
-      // Находим котиков, которые были удалены из топа
-      const removedCats = previousCats.filter(
-        (prevCat) =>
-          !cats.find((newCat) => newCat.imagePath === prevCat.imagePath),
-      );
-
-      // Добавляем удаленных котиков обратно в ленту
-      if (removedCats.length > 0) {
-        setFeedItems((prev) => [...removedCats, ...prev]);
-        if (onCatRemovedFromTop) {
-          onCatRemovedFromTop(removedCats);
-        }
-      }
-
-      const addedPaths = new Set(cats.map((cat) => cat.imagePath));
-      setAddedToTop(addedPaths);
-      setFeedItems((prev) =>
-        prev.filter((item) => !addedPaths.has(item.imagePath)),
-      );
-    } catch (error) {
-      console.error("Ошибка загрузки топа:", error);
-    }
+  const handleAddToTop = (imagePath) => {
+    // Локально обновляем UI без отправки на сервер
+    setFeedItems((prev) =>
+      prev.filter((item) => item.imagePath !== imagePath),
+    );
   };
 
   useEffect(() => {
-    fetchTopCats();
     loadMoreFeed(8);
   }, []);
 
