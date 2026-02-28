@@ -78,8 +78,8 @@ function createCatMessage() {
     ? reactions[Math.floor(Math.random() * reactions.length)]
     : null;
 
-  const avatarSeed = name + Math.random().toString(36).substring(7);
-  const avatarUrl = `/api/cat-image?width=48&height=48&catId=${avatarSeed}&timestamp=${Date.now()}`;
+  const avatarSeed = Math.floor(Math.random() * 10000);
+  const avatarUrl = `https://cataas.com/cat?width=48&height=48&timestamp=${avatarSeed}`;
 
   return {
     id: Date.now().toString() + "-" + Math.random().toString(36).substring(2),
