@@ -1,36 +1,36 @@
-import { useState, useEffect } from 'react'
-import styles from './RandomCat.module.css'
+import { useState, useEffect } from "react";
+import styles from "./RandomCat.module.css";
 
 export default function RandomCat() {
-  const [catUrl, setCatUrl] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [catUrl, setCatUrl] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const loadRandomCat = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
       // Используем публичный API CATAAS
-      const randomId = Math.floor(Math.random() * 1000000)
-      const url = `https://cataas.com/cat?width=400&height=320&type=square&timestamp=${randomId}`
-      
+      const randomId = Math.floor(Math.random() * 1000000);
+      const url = `https://cataas.com/cat?width=400&height=320&type=square&timestamp=${randomId}`;
+
       await new Promise((resolve, reject) => {
-        const img = new Image()
-        img.onload = resolve
-        img.onerror = reject
-        img.src = url
-        setCatUrl(url)
-      })
+        const img = new Image();
+        img.onload = resolve;
+        img.onerror = reject;
+        img.src = url;
+        setCatUrl(url);
+      });
     } catch (error) {
-      console.error('Ошибка загрузки котика:', error)
+      console.error("Ошибка загрузки котика:", error);
       // Fallback URL
-      setCatUrl('https://cataas.com/cat')
+      setCatUrl("https://cataas.com/cat");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    loadRandomCat()
-  }, [])
+    loadRandomCat();
+  }, []);
 
   return (
     <section className={styles.randomCat}>
@@ -43,7 +43,7 @@ export default function RandomCat() {
         onClick={loadRandomCat}
         disabled={loading}
       >
-        {loading ? 'Загружаем котика...' : 'Показать случайного котика'}
+        {loading ? "Загружаем котика..." : "Показать случайного котика"}
       </button>
       <div className={styles.imageWrapper}>
         {catUrl && (
@@ -56,5 +56,5 @@ export default function RandomCat() {
         )}
       </div>
     </section>
-  )
+  );
 }

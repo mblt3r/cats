@@ -39,9 +39,7 @@ export default function Feed({ onTopCatsUpdate, onCatRemovedFromTop }) {
 
   const handleAddToTop = (imagePath) => {
     // Локально обновляем UI без отправки на сервер
-    setFeedItems((prev) =>
-      prev.filter((item) => item.imagePath !== imagePath),
-    );
+    setFeedItems((prev) => prev.filter((item) => item.imagePath !== imagePath));
   };
 
   useEffect(() => {

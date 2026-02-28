@@ -65,9 +65,7 @@ function App() {
           </button>
         </div>
       </div>
-      <div className={styles.content}>
-        {renderView()}
-      </div>
+      <div className={styles.content}>{renderView()}</div>
     </div>
   );
 }
