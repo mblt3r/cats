@@ -20,45 +20,44 @@ function App() {
             to="/"
             className={({ isActive }) => (isActive ? styles.active : "")}
           >
-            Случайный котик
+            Топ 🔥
+          </NavLink>
+
+          <NavLink
+            to="/random"
+            className={({ isActive }) => (isActive ? styles.active : "")}
+          >
+            Случайный котик 🎲
           </NavLink>
 
           <NavLink
             to="/tinder"
             className={({ isActive }) => (isActive ? styles.active : "")}
           >
-            Tinder котики
-          </NavLink>
-
-          <NavLink
-            to="/feed"
-            className={({ isActive }) => (isActive ? styles.active : "")}
-          >
-            Лента и Топ
+            Кототиндер 💕
           </NavLink>
 
           <NavLink
             to="/chat"
             className={({ isActive }) => (isActive ? styles.active : "")}
           >
-            Chat с котиком
+            Чат 💬
           </NavLink>
 
           <NavLink
             to="/flappy"
             className={({ isActive }) => (isActive ? styles.active : "")}
           >
-            Flappy Cats
+            Flappy Cats 🕹️
           </NavLink>
         </div>
       </div>
 
       <div className={styles.content}>
         <Routes>
-          <Route path="/" element={<RandomCat />} />
-          {/* <Route path="/" element={<RandomCat />} /> */}
+          <Route path="/" element={<FeedAndTop />} />
           <Route path="/tinder" element={<TinderCats />} />
-          <Route path="/feed" element={<FeedAndTop />} />
+          <Route path="/random" element={<RandomCat />} />
           <Route path="/chat" element={<CatChat />} />
           <Route path="/flappy" element={<FlappyCats />} />
         </Routes>

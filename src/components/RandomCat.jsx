@@ -34,17 +34,20 @@ export default function RandomCat() {
 
   return (
     <section className={styles.randomCat}>
-      <h2 className={styles.title}>Случайный смешной котик из CATAAS</h2>
+      <h2 className={styles.title}>Случайный смешной котик</h2>
       <p className={styles.subtitle}>
         Нажми на кнопку, чтобы увидеть нового рандомного котика.
       </p>
-      <button
-        className={`${styles.button} ${styles.buttonPrimary}`}
-        onClick={loadRandomCat}
-        disabled={loading}
-      >
-        {loading ? "Загружаем котика..." : "Показать случайного котика"}
-      </button>
+      <div>
+        <button
+          className={`${styles.button} ${styles.buttonPrimary}`}
+          onClick={loadRandomCat}
+          disabled={loading}
+        >
+          {loading ? "Загружаем котика..." : "Показать случайного котика"}
+        </button>
+      </div>
+
       <div className={styles.imageWrapper}>
         {catUrl && (
           <img

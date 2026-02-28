@@ -176,8 +176,7 @@ export default function TinderCats() {
   return (
     <section className={styles.tinder}>
       <div className={styles.header}>
-        <h2 className={styles.title}>TINDER</h2>
-        <p className={styles.subtitle}>Стрелки ← → тоже работают.</p>
+        <h2 className={styles.title}>КОТОТИНДЕР</h2>
       </div>
 
       <div className={styles.stack}>

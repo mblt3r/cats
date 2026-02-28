@@ -5,6 +5,9 @@
   border: 1px solid var(--surface-border);
   background: var(--panel-bg);
   background-size: var(--panel-bg-size);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .header {
