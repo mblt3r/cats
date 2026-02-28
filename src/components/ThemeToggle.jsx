@@ -4,7 +4,7 @@ import styles from "./ThemeToggle.module.css";
 function getInitialTheme() {
   const saved = localStorage.getItem("theme");
   if (saved === "light" || saved === "dark") return saved;
-  return "light"; // светлая тема по умолчанию
+  return "dark"; // светлая тема по умолчанию
 }
 
 export default function ThemeToggle() {
