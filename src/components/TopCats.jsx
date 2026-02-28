@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
 import styles from "./TopCats.module.css";
 
-export default function TopCats({ topCats = [], onCatRemoved }) {
-  const [sortedCats, setSortedCats] = useState([]);
+export default function TopCats({ topCats, setTopCats, onCatRemoved }) {
   const [loading, setLoading] = useState(false);
+  const [sortedCats, setSortedCats] = useState([]);
 
   useEffect(() => {
     setSortedCats([...topCats].sort((a, b) => (b.votes || 0) - (a.votes || 0)));
   }, [topCats]);
 
   const handleVote = (catId, action) => {
-    setSortedCats((prev) => {
+    setTopCats((prev) => {
       const updated = prev
         .map((cat) => {
           if (cat.id === catId) {

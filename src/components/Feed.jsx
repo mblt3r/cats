@@ -1,29 +1,19 @@
-import {
-  useState,
-  useEffect,
-  useRef,
-  useCallback,
-  forwardRef,
-  useImperativeHandle,
-} from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import styles from "./Feed.module.css";
 
-const Feed = forwardRef(({ onTopCatsUpdate, onCatRemovedFromTop }, ref) => {
-  const [feedItems, setFeedItems] = useState([]);
-  const [topCats, setTopCats] = useState([]);
+const Feed = ({
+  onTopCatsUpdate,
+  feedItems,
+  setFeedItems,
+  setTopCats,
+  topCats,
+}) => {
   const [loading, setLoading] = useState(false);
   const loader = useRef(null);
 
-  // Expose method to add cat back from top
-  useImperativeHandle(ref, () => ({
-    addCatBack: (cat) => {
-      setFeedItems((prev) => [cat, ...prev]);
-    },
-  }));
-
   const createFeedItem = useCallback(() => {
     const uniqueId = Math.floor(Math.random() * 1000000);
-    const fullImageUrl = `https://cataas.com/cat?width=400&height=320&timestamp=${uniqueId}`;
+    const fullImageUrl = `https://cataas.com/cat?${uniqueId}`;
 
     return {
       id: uniqueId,
@@ -52,9 +42,8 @@ const Feed = forwardRef(({ onTopCatsUpdate, onCatRemovedFromTop }, ref) => {
     [createFeedItem],
   );
 
-  const handleAddToTop = (imagePath) => {
-    // Находим котика в ленте
-    const catToAdd = feedItems.find((item) => item.imagePath === imagePath);
+  const handleAddToTop = (id) => {
+    const catToAdd = feedItems.find((item) => item.id === id);
 
     if (catToAdd) {
       // Добавляем в топ с 1 голосом
@@ -68,9 +57,7 @@ const Feed = forwardRef(({ onTopCatsUpdate, onCatRemovedFromTop }, ref) => {
       }
 
       // Удаляем из ленты
-      setFeedItems((prev) =>
-        prev.filter((item) => item.imagePath !== imagePath),
-      );
+      setFeedItems((prev) => prev.filter((item) => item.id !== id));
     }
   };
 
@@ -132,7 +119,7 @@ const Feed = forwardRef(({ onTopCatsUpdate, onCatRemovedFromTop }, ref) => {
             <div className={styles.feedItemFooter}>
               <button
                 className={`${styles.button} ${styles.buttonPrimary} ${styles.feedItemButton}`}
-                onClick={() => handleAddToTop(item.imagePath)}
+                onClick={() => handleAddToTop(item.id)}
               >
                 Добавить в топ смешных
               </button>
@@ -158,7 +145,7 @@ const Feed = forwardRef(({ onTopCatsUpdate, onCatRemovedFromTop }, ref) => {
       )}
     </section>
   );
-});
+};
 
 Feed.displayName = "Feed";
 export default Feed;
