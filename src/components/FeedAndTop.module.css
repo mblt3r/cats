@@ -1,0 +1,32 @@
+.container {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 40px;
+  width: 100%;
+}
+
+.topSection {
+  width: 100%;
+  background-color: var(--bg);
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.feedSection {
+  width: 100%;
+  padding: 20px 0;
+}
+
+@media (max-width: 768px) {
+  .container {
+    gap: 20px;
+  }
+
+  .topSection {
+    padding: 15px 0;
+  }
+
+  .feedSection {
+    padding: 15px 0;
+  }
+}

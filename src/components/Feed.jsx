@@ -1,10 +1,25 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import styles from "./Feed.module.css";
 
-export default function Feed({ onTopCatsUpdate, onCatRemovedFromTop }) {
+const Feed = forwardRef(({ onTopCatsUpdate, onCatRemovedFromTop }, ref) => {
   const [feedItems, setFeedItems] = useState([]);
+  const [topCats, setTopCats] = useState([]);
   const [loading, setLoading] = useState(false);
   const loader = useRef(null);
+
+  // Expose method to add cat back from top
+  useImperativeHandle(ref, () => ({
+    addCatBack: (cat) => {
+      setFeedItems((prev) => [cat, ...prev]);
+    },
+  }));
 
   const createFeedItem = useCallback(() => {
     const uniqueId = Math.floor(Math.random() * 1000000);
@@ -38,8 +53,25 @@ export default function Feed({ onTopCatsUpdate, onCatRemovedFromTop }) {
   );
 
   const handleAddToTop = (imagePath) => {
-    // Локально обновляем UI без отправки на сервер
-    setFeedItems((prev) => prev.filter((item) => item.imagePath !== imagePath));
+    // Находим котика в ленте
+    const catToAdd = feedItems.find((item) => item.imagePath === imagePath);
+
+    if (catToAdd) {
+      // Добавляем в топ с 1 голосом
+      const updatedCat = { ...catToAdd, votes: 1 };
+      const newTopCats = [updatedCat, ...topCats];
+      setTopCats(newTopCats);
+
+      // Вызываем callback если он есть
+      if (onTopCatsUpdate) {
+        onTopCatsUpdate(newTopCats);
+      }
+
+      // Удаляем из ленты
+      setFeedItems((prev) =>
+        prev.filter((item) => item.imagePath !== imagePath),
+      );
+    }
   };
 
   useEffect(() => {
@@ -126,4 +158,7 @@ export default function Feed({ onTopCatsUpdate, onCatRemovedFromTop }) {
       )}
     </section>
   );
-}
+});
+
+Feed.displayName = "Feed";
+export default Feed;

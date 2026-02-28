@@ -1,58 +1,45 @@
 import { useState, useEffect } from "react";
-import { getTopCats, incrementVote, decrementVote } from "../services/api";
 import styles from "./TopCats.module.css";
 
-export default function TopCats({
-  currentSort,
-  topCats,
-  onVoteUpdate,
-  onCatRemoved,
-}) {
-  const [previousCats, setPreviousCats] = useState([]);
-  const [loading, setLoading] = useState(true);
+export default function TopCats({ topCats = [], onCatRemoved }) {
+  const [sortedCats, setSortedCats] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // Находим удаленных котиков при изменении топа
-    const removed = previousCats.filter(
-      (prevCat) =>
-        !topCats.find((newCat) => newCat.imagePath === prevCat.imagePath),
-    );
-
-    if (removed.length > 0 && onCatRemoved) {
-      onCatRemoved(removed);
-    }
-
-    setPreviousCats(topCats);
-  }, [topCats, onCatRemoved]);
-
-  useEffect(() => {
-    setLoading(false);
+    setSortedCats([...topCats].sort((a, b) => (b.votes || 0) - (a.votes || 0)));
   }, [topCats]);
 
-  const handleVote = async (imagePath, action) => {
-    try {
-      let updatedCats;
-      if (action === "increment") {
-        updatedCats = await incrementVote(imagePath);
-      } else {
-        updatedCats = await decrementVote(imagePath);
-      }
-      // Вызываем callback для обновления состояния в родительском компоненте
-      if (onVoteUpdate) {
-        onVoteUpdate();
-      }
-    } catch (error) {
-      console.error("Ошибка обновления рейтинга:", error);
-    }
-  };
+  const handleVote = (catId, action) => {
+    setSortedCats((prev) => {
+      const updated = prev
+        .map((cat) => {
+          if (cat.id === catId) {
+            const newVotes = Math.max(
+              0,
+              (cat.votes || 0) + (action === "increment" ? 1 : -1),
+            );
 
-  const sortedCats = [...topCats].sort((a, b) => {
-    if (currentSort === "funny") {
-      return b.votes - a.votes;
-    } else {
-      return a.votes - b.votes;
-    }
-  });
+            // Если голоса стали 0, удаляем из топа
+            if (newVotes === 0) {
+              if (onCatRemoved) {
+                onCatRemoved(cat);
+              }
+              return null;
+            }
+
+            return {
+              ...cat,
+              votes: newVotes,
+            };
+          }
+          return cat;
+        })
+        .filter((cat) => cat !== null)
+        .sort((a, b) => (b.votes || 0) - (a.votes || 0));
+
+      return updated;
+    });
+  };
 
   if (loading) {
     return (
@@ -93,14 +80,14 @@ export default function TopCats({
                 <div className={styles.voteControls}>
                   <button
                     className={styles.voteBtn}
-                    onClick={() => handleVote(cat.imagePath, "decrement")}
+                    onClick={() => handleVote(cat.id, "decrement")}
                     title="Уменьшить рейтинг"
                   >
                     −
                   </button>
                   <button
                     className={styles.voteBtn}
-                    onClick={() => handleVote(cat.imagePath, "increment")}
+                    onClick={() => handleVote(cat.id, "increment")}
                     title="Увеличить рейтинг"
                   >
                     +

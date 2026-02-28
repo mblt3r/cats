@@ -3,7 +3,7 @@ import RandomCat from "./components/RandomCat";
 import TinderCats from "./components/TinderCats";
 import CatChat from "./components/CatChat";
 import FlappyCats from "./components/FlappyCats";
-import Feed from "./components/Feed";
+import FeedAndTop from "./components/FeedAndTop";
 import ThemeToggle from "./components/ThemeToggle";
 import styles from "./App.module.css";
 
@@ -20,8 +20,8 @@ function App() {
         return <CatChat />;
       case "flappy":
         return <FlappyCats />;
-      case "feed":
-        return <Feed />;
+      case "feedAndTop":
+        return <FeedAndTop />;
       default:
         return <RandomCat />;
     }
@@ -46,10 +46,10 @@ function App() {
             Tinder котики
           </button>
           <button
-            className={currentView === "feed" ? styles.active : ""}
-            onClick={() => setCurrentView("feed")}
+            className={currentView === "feedAndTop" ? styles.active : ""}
+            onClick={() => setCurrentView("feedAndTop")}
           >
-            Лента
+            Лента и Топ
           </button>
           <button
             className={currentView === "chat" ? styles.active : ""}
