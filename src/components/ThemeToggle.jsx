@@ -1,22 +1,30 @@
-import { useEffect, useState } from 'react'
-import styles from './ThemeToggle.module.css'
+import { useEffect, useState } from "react";
+import styles from "./ThemeToggle.module.css";
 
 function getInitialTheme() {
-  const saved = localStorage.getItem('theme')
-  if (saved === 'light' || saved === 'dark') return saved
-  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-  return prefersDark ? 'dark' : 'light'
+  const saved = localStorage.getItem("theme");
+  if (saved === "light" || saved === "dark") return saved;
+  return "light"; // светлая тема по умолчанию
 }
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState(() => getInitialTheme())
+  const [theme, setTheme] = useState(() => getInitialTheme());
 
   useEffect(() => {
-    document.documentElement.dataset.theme = theme
-    localStorage.setItem('theme', theme)
-  }, [theme])
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
-  const checked = theme === 'dark'
+  // Проверяем тему при загрузке страницы
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      document.documentElement.dataset.theme = savedTheme;
+      setTheme(savedTheme);
+    }
+  }, []);
+
+  const checked = theme === "dark";
 
   return (
     <div className={styles.wrapper}>
@@ -25,8 +33,8 @@ export default function ThemeToggle() {
         className={styles.toggle}
         role="switch"
         aria-checked={checked}
-        aria-label={checked ? 'Включена темная тема' : 'Включена светлая тема'}
-        onClick={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))}
+        aria-label={checked ? "Включена темная тема" : "Включена светлая тема"}
+        onClick={() => setTheme((t) => (t === "dark" ? "light" : "dark"))}
       >
         <span className={styles.track}>
           <span className={styles.iconLeft} aria-hidden="true" />
@@ -35,5 +43,5 @@ export default function ThemeToggle() {
         </span>
       </button>
     </div>
-  )
+  );
 }
